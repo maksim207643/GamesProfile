@@ -2,168 +2,258 @@
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
-    <title>Мои ники</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Профиль</title>
     <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
       :root {
-        --bg: #f4f6f9;
-        --card: #ffffff;
-        --primary: #2563eb;
-        --text: #1f2937;
-        --border: #e5e7eb;
+        --bg: #0f0f14;
+        --card: #1a1a24;
+        --accent: #7c5cff;
+        --accent-glow: rgba(124, 92, 255, 0.35);
+        --text: #e8e8f0;
+        --muted: #8888a0;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
       }
 
       body {
-        font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-        background-color: var(--bg);
+        font-family: 'Inter', system-ui, sans-serif;
+        background: var(--bg);
         color: var(--text);
-        margin: 0;
-        padding: 2rem;
+        min-height: 100vh;
         display: flex;
+        align-items: center;
         justify-content: center;
+        padding: 2rem 1rem;
       }
 
-      .container {
+      .profile {
         width: 100%;
-        max-width: 500px;
-        background: var(--card);
-        padding: 2rem;
-        border-radius: 12px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        max-width: 460px;
+      }
+
+      .avatar {
+        width: 110px;
+        height: 110px;
+        margin: 0 auto 1.2rem;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--accent), #ff6bd6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.6rem;
+        font-weight: 800;
+        color: #fff;
+        box-shadow: 0 0 30px var(--accent-glow);
+        user-select: none;
       }
 
       h1 {
         text-align: center;
-        margin-top: 0;
-        font-size: 1.5rem;
+        font-size: 1.4rem;
+        font-weight: 800;
+        margin-bottom: 0.3rem;
       }
 
-      label {
-        display: block;
-        margin-top: 1rem;
-        font-weight: 600;
-        color: #374151;
+      .bio {
+        text-align: center;
+        color: var(--muted);
+        font-size: 0.9rem;
+        margin-bottom: 2rem;
       }
 
-      input[type="text"] {
-        width: 100%;
-        padding: 0.75rem;
-        margin-top: 0.25rem;
-        border: 1px solid var(--border);
-        border-radius: 8px;
-        box-sizing: border-box;
-        transition: border-color 0.2s;
-      }
-
-      input:focus {
-        outline: none;
-        border-color: var(--primary);
-      }
-
-      button {
-        margin-top: 1.5rem;
-        width: 100%;
-        padding: 0.8rem;
-        background-color: var(--primary);
-        color: white;
-        border: none;
-        border-radius: 8px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: background-color 0.2s;
-      }
-
-      button:hover {
-        background-color: #1d4ed8;
-      }
-
-      #result {
-        margin-top: 2rem;
-        padding-top: 1rem;
-        border-top: 1px solid var(--border);
-      }
-
-      .profile-item {
+      .card {
         display: flex;
-        justify-content: space-between;
         align-items: center;
-        padding: 0.5rem 0;
-        border-bottom: 1px solid #f3f4f6;
+        gap: 1rem;
+        background: var(--card);
+        border: 1px solid #2a2a38;
+        border-radius: 12px;
+        padding: 0.9rem 1.1rem;
+        margin-bottom: 0.7rem;
+        text-decoration: none;
+        color: var(--text);
+        transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
       }
 
-      .profile-item:last-child {
-        border-bottom: none;
+      .card:hover {
+        transform: translateY(-3px);
+        border-color: var(--accent);
+        box-shadow: 0 6px 20px var(--accent-glow);
       }
 
-      .label-tag {
-        background: #eef2ff;
-        color: #2563eb;
-        padding: 0.25rem 0.6rem;
-        border-radius: 6px;
-        font-size: 0.85rem;
+      .icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.4rem;
+        flex-shrink: 0;
+        background: #252533;
+      }
+
+      .card-info {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .platform {
+        font-size: 0.75rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
         font-weight: 600;
       }
 
-      .value-text {
-        font-weight: 500;
+      .nick {
+        font-size: 1.05rem;
+        font-weight: 600;
+        margin-top: 2px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .copy-btn {
+        background: none;
+        border: none;
+        color: var(--muted);
+        cursor: pointer;
+        font-size: 1.1rem;
+        padding: 0.3rem;
+        border-radius: 6px;
+        transition: color 0.2s, background 0.2s;
+        flex-shrink: 0;
+      }
+
+      .copy-btn:hover {
+        color: var(--accent);
+        background: #252533;
+      }
+
+      .copy-btn.copied {
+        color: #4ade80;
+      }
+
+      .footer {
+        text-align: center;
+        color: var(--muted);
+        font-size: 0.75rem;
+        margin-top: 1.5rem;
+      }
+
+      @media (max-width: 380px) {
+        .avatar { width: 90px; height: 90px; font-size: 2.1rem; }
+        h1 { font-size: 1.2rem; }
       }
     </style>
   </head>
   <body>
-    <div class="container">
-      <h1>Мои ники</h1>
+    <div class="profile">
+      <div class="avatar" id="avatar">A</div>
+      <h1 id="name">Твой ник</h1>
+      <p class="bio">короткое описание о себе</p>
 
-      <label for="tg-nick">Ник в Telegram</label>
-      <input type="text" id="tg-nick" placeholder="например, @username" />
+      <div id="cards"></div>
 
-      <label for="mc-nick">Ник в Minecraft</label>
-      <input type="text" id="mc-nick" placeholder="например, Steve" />
-
-      <label for="rbx-nick">Ник в Roblox</label>
-      <input type="text" id="rbx-nick" placeholder="например, Player123" />
-
-      <!-- Сюда можно добавить другие поля по аналогии -->
-
-      <button onclick="showProfiles()">Показать профили</button>
-
-      <div id="result"></div>
+      <p class="footer">© 2026</p>
     </div>
 
     <script>
-      function showProfiles() {
-        const tg = document.getElementById('tg-nick').value.trim();
-        const mc = document.getElementById('mc-nick').value.trim();
-        const rbx = document.getElementById('rbx-nick').value.trim();
+      // ── Данные профиля ──
+      // Меняй значения на свои. Поле url — если платформа
+      // поддерживает ссылку на профиль, иначе оставь пустым "".
+      const profile = {
+        name: "Твой ник",
+        bio: "короткое описание о себе",
+        avatarText: "A",
+        links: [
+          {
+            platform: "Telegram",
+            nick: "@username",
+            url: "https://t.me/username",
+            icon: "✈️",
+          },
+          {
+            platform: "Minecraft",
+            nick: "Steve",
+            url: "",
+            icon: "⛏️",
+          },
+          {
+            platform: "Roblox",
+            nick: "Player123",
+            url: "https://www.roblox.com/users/profile?username=Player123",
+            icon: "🟥",
+          },
+          {
+            platform: "Discord",
+            nick: "username",
+            url: "",
+            icon: "💬",
+          },
+          {
+            platform: "Steam",
+            nick: "steam_nick",
+            url: "https://steamcommunity.com/id/steam_nick",
+            icon: "🎮",
+          },
+        ],
+      };
 
-        const result = document.getElementById('result');
-        result.innerHTML = '';
+      // ── Заполнение страницы ──
+      document.getElementById("name").textContent = profile.name;
+      document.getElementById("avatar").textContent = profile.avatarText;
+      document.querySelector(".bio").textContent = profile.bio;
 
-        if (!tg && !mc && !rbx) {
-          result.textContent = 'Введите хотя бы один ник.';
-          return;
+      const cards = document.getElementById("cards");
+
+      profile.links.forEach((link, i) => {
+        const card = document.createElement("a");
+        card.className = "card";
+        if (link.url) {
+          card.href = link.url;
+          card.target = "_blank";
+          card.rel = "noopener noreferrer";
         }
 
-        function addItem(label, value) {
-          if (!value) return;
-          const div = document.createElement('div');
-          div.className = 'profile-item';
-          div.innerHTML = `
-            <span class="label-tag">${label}</span>
-            <span class="value-text">${escapeHtml(value)}</span>
-          `;
-          result.appendChild(div);
-        }
+        card.innerHTML = `
+          <div class="icon">${link.icon}</div>
+          <div class="card-info">
+            <div class="platform">${link.platform}</div>
+            <div class="nick">${link.nick}</div>
+          </div>
+        `;
 
-        addItem('Telegram', tg);
-        addItem('Minecraft', mc);
-        addItem('Roblox', rbx);
-      }
+        // Кнопка копирования ника
+        const copyBtn = document.createElement("button");
+        copyBtn.className = "copy-btn";
+        copyBtn.title = "Скопировать ник";
+        copyBtn.innerHTML = "⧉";
+        copyBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          navigator.clipboard.writeText(link.nick).then(() => {
+            copyBtn.classList.add("copied");
+            copyBtn.innerHTML = "✓";
+            setTimeout(() => {
+              copyBtn.classList.remove("copied");
+              copyBtn.innerHTML = "⧉";
+            }, 1200);
+          });
+        });
+        card.appendChild(copyBtn);
 
-      // Защита от XSS: экранирование спецсимволов
-      function escapeHtml(text) {
-        const div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
-      }
+        cards.appendChild(card);
+      });
     </script>
   </body>
 </html>
