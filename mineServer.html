@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Мои ники</title>
+    <style>
+      :root {
+        --bg: #f4f6f9;
+        --card: #ffffff;
+        --primary: #2563eb;
+        --text: #1f2937;
+        --border: #e5e7eb;
+      }
+
+      body {
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+        background-color: var(--bg);
+        color: var(--text);
+        margin: 0;
+        padding: 2rem;
+        display: flex;
+        justify-content: center;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 500px;
+        background: var(--card);
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      }
+
+      h1 {
+        text-align: center;
+        margin-top: 0;
+        font-size: 1.5rem;
+      }
+
+      label {
+        display: block;
+        margin-top: 1rem;
+        font-weight: 600;
+        color: #374151;
+      }
+
+      input[type="text"] {
+        width: 100%;
+        padding: 0.75rem;
+        margin-top: 0.25rem;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        box-sizing: border-box;
+        transition: border-color 0.2s;
+      }
+
+      input:focus {
+        outline: none;
+        border-color: var(--primary);
+      }
+
+      button {
+        margin-top: 1.5rem;
+        width: 100%;
+        padding: 0.8rem;
+        background-color: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+
+      button:hover {
+        background-color: #1d4ed8;
+      }
+
+      #result {
+        margin-top: 2rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--border);
+      }
+
+      .profile-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid #f3f4f6;
+      }
+
+      .profile-item:last-child {
+        border-bottom: none;
+      }
+
+      .label-tag {
+        background: #eef2ff;
+        color: #2563eb;
+        padding: 0.25rem 0.6rem;
+        border-radius: 6px;
+        font-size: 0.85rem;
+        font-weight: 600;
+      }
+
+      .value-text {
+        font-weight: 500;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Мои ники</h1>
+
+      <label for="tg-nick">Ник в Telegram</label>
+      <input type="text" id="tg-nick" placeholder="например, @username" />
+
+      <label for="mc-nick">Ник в Minecraft</label>
+      <input type="text" id="mc-nick" placeholder="например, Steve" />
+
+      <label for="rbx-nick">Ник в Roblox</label>
+      <input type="text" id="rbx-nick" placeholder="например, Player123" />
+
+      <!-- Сюда можно добавить другие поля по аналогии -->
+
+      <button onclick="showProfiles()">Показать профили</button>
+
+      <div id="result"></div>
+    </div>
+
+    <script>
+      function showProfiles() {
+        const tg = document.getElementById('tg-nick').value.trim();
+        const mc = document.getElementById('mc-nick').value.trim();
+        const rbx = document.getElementById('rbx-nick').value.trim();
+
+        const result = document.getElementById('result');
+        result.innerHTML = '';
+
+        if (!tg && !mc && !rbx) {
+          result.textContent = 'Введите хотя бы один ник.';
+          return;
+        }
+
+        function addItem(label, value) {
+          if (!value) return;
+          const div = document.createElement('div');
+          div.className = 'profile-item';
+          div.innerHTML = `
+            <span class="label-tag">${label}</span>
+            <span class="value-text">${escapeHtml(value)}</span>
+          `;
+          result.appendChild(div);
+        }
+
+        addItem('Telegram', tg);
+        addItem('Minecraft', mc);
+        addItem('Roblox', rbx);
+      }
+
+      // Защита от XSS: экранирование спецсимволов
+      function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+      }
+    </script>
+  </body>
+</html>
